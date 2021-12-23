@@ -1,0 +1,104 @@
+Index: app/src/main/java/com/codinginflow/imagesearchapp/ui/gallery/GalleryFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.codinginflow.imagesearchapp.ui.gallery\r\n\r\nimport android.os.Bundle\r\nimport android.view.Menu\r\nimport android.view.MenuInflater\r\nimport android.view.View\r\nimport androidx.appcompat.widget.SearchView\r\nimport androidx.fragment.app.Fragment\r\nimport androidx.fragment.app.viewModels\r\nimport com.codinginflow.imagesearchapp.R\r\nimport com.codinginflow.imagesearchapp.databinding.FragmentGalleryBinding\r\nimport dagger.hilt.android.AndroidEntryPoint\r\n\r\n@AndroidEntryPoint\r\nclass GalleryFragment : Fragment(R.layout.fragment_gallery) {\r\n\r\n    private val viewModel by viewModels<GalleryViewModel>()\r\n\r\n    private var _binding: FragmentGalleryBinding? = null\r\n    private val binding get() = _binding!!\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n\r\n        _binding = FragmentGalleryBinding.bind(view)\r\n\r\n        val adapter = UnsplashPhotoAdapter()\r\n\r\n        binding.apply {\r\n            recyclerView.setHasFixedSize(true)\r\n            recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(\r\n                header = UnsplashPhotoLoadStateAdapter { adapter.retry() },\r\n                footer = UnsplashPhotoLoadStateAdapter { adapter.retry() },\r\n            )\r\n        }\r\n\r\n        viewModel.photos.observe(viewLifecycleOwner) {\r\n            adapter.submitData(viewLifecycleOwner.lifecycle, it)\r\n        }\r\n\r\n        setHasOptionsMenu(true)\r\n    }\r\n\r\n    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {\r\n        super.onCreateOptionsMenu(menu, inflater)\r\n\r\n        inflater.inflate(R.menu.menu_gallery, menu)\r\n\r\n        val searchItem = menu.findItem(R.id.action_search)\r\n        val searchView = searchItem.actionView as SearchView\r\n\r\n        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {\r\n            override fun onQueryTextSubmit(query: String?): Boolean {\r\n\r\n                if (query != null) {\r\n                    binding.recyclerView.scrollToPosition(0)\r\n                    viewModel.searchPhotos(query)\r\n                    searchView.clearFocus()\r\n                }\r\n                return true\r\n            }\r\n\r\n            override fun onQueryTextChange(newText: String?): Boolean {\r\n                return true\r\n            }\r\n        })\r\n    }\r\n\r\n    override fun onDestroyView() {\r\n        super.onDestroyView()\r\n        _binding = null\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/codinginflow/imagesearchapp/ui/gallery/GalleryFragment.kt b/app/src/main/java/com/codinginflow/imagesearchapp/ui/gallery/GalleryFragment.kt
+--- a/app/src/main/java/com/codinginflow/imagesearchapp/ui/gallery/GalleryFragment.kt	(revision b98037e60fcebade49ec3e5500d69a106b679df6)
++++ b/app/src/main/java/com/codinginflow/imagesearchapp/ui/gallery/GalleryFragment.kt	(date 1640222231014)
+@@ -51,7 +51,6 @@
+ 
+         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+             override fun onQueryTextSubmit(query: String?): Boolean {
+-
+                 if (query != null) {
+                     binding.recyclerView.scrollToPosition(0)
+                     viewModel.searchPhotos(query)
+Index: .idea/runConfigurations.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"RunConfigurationProducerService\">\r\n    <option name=\"ignoredProducers\">\r\n      <set>\r\n        <option value=\"org.jetbrains.plugins.gradle.execution.test.runner.AllInPackageGradleConfigurationProducer\" />\r\n        <option value=\"org.jetbrains.plugins.gradle.execution.test.runner.TestClassGradleConfigurationProducer\" />\r\n        <option value=\"org.jetbrains.plugins.gradle.execution.test.runner.TestMethodGradleConfigurationProducer\" />\r\n      </set>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/runConfigurations.xml b/.idea/runConfigurations.xml
+--- a/.idea/runConfigurations.xml	(revision b98037e60fcebade49ec3e5500d69a106b679df6)
++++ b/.idea/runConfigurations.xml	(date 1640218668976)
+@@ -1,12 +1,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RunConfigurationProducerService">
+-    <option name="ignoredProducers">
+-      <set>
+-        <option value="org.jetbrains.plugins.gradle.execution.test.runner.AllInPackageGradleConfigurationProducer" />
+-        <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestClassGradleConfigurationProducer" />
+-        <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestMethodGradleConfigurationProducer" />
+-      </set>
+-    </option>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\r\napply plugin: 'kotlin-android'\r\napply plugin: 'kotlin-android-extensions'\r\napply plugin: 'kotlin-kapt'\r\napply plugin: \"androidx.navigation.safeargs.kotlin\"\r\napply plugin: 'dagger.hilt.android.plugin'\r\n\r\nandroid {\r\n    compileSdkVersion rootProject.compileSdkVersion\r\n    buildToolsVersion \"29.0.3\"\r\n\r\n    defaultConfig {\r\n        applicationId \"com.codinginflow.imagesearchapp\"\r\n        minSdkVersion rootProject.minSdkVersion\r\n        targetSdkVersion rootProject.targetSdkVersion\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n\r\n        buildConfigField(\"String\", \"UNSPLASH_ACCESS_KEY\", unsplash_access_key)\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n\r\n    buildFeatures {\r\n        viewBinding true\r\n    }\r\n\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n\r\n    kotlinOptions {\r\n        jvmTarget = JavaVersion.VERSION_1_8\r\n    }\r\n}\r\n\r\ndependencies {\r\n    // Default dependencies\r\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\r\n    implementation \"org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion\"\r\n    implementation \"androidx.core:core-ktx:$ktxVersion\"\r\n    implementation \"androidx.appcompat:appcompat:$appCompatVersion\"\r\n    implementation \"androidx.constraintlayout:constraintlayout:$constraintLayoutVersion\"\r\n    testImplementation \"junit:junit:$junitVersion\"\r\n    androidTestImplementation \"androidx.test.ext:junit:$testExtJunitVersion\"\r\n    androidTestImplementation \"androidx.test.espresso:espresso-core:$espressoVersion\"\r\n\r\n    // Navigation Component\r\n    implementation \"androidx.navigation:navigation-fragment-ktx:$navigationVersion\"\r\n    implementation \"androidx.navigation:navigation-ui-ktx:$navigationVersion\"\r\n\r\n    // Dagger Hilt\r\n    implementation \"com.google.dagger:hilt-android:$hiltVersion\"\r\n    kapt \"com.google.dagger:hilt-android-compiler:$hiltVersion\"\r\n    implementation \"androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidXVersion\"\r\n    kapt \"androidx.hilt:hilt-compiler:$hiltAndroidXVersion\"\r\n\r\n    // Retrofit + GSON\r\n    implementation \"com.squareup.retrofit2:retrofit:$retrofitVersion\"\r\n    implementation \"com.squareup.retrofit2:converter-gson:$retrofitVersion\"\r\n\r\n    // Glide\r\n    implementation \"com.github.bumptech.glide:glide:$glideVersion\"\r\n\r\n    // Paging 3\r\n    implementation \"androidx.paging:paging-runtime:$pagingVersion\"\r\n}\r\n\r\nkapt {\r\n    correctErrorTypes true\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	(revision b98037e60fcebade49ec3e5500d69a106b679df6)
++++ b/app/build.gradle	(date 1640219631310)
+@@ -10,6 +10,7 @@
+     buildToolsVersion "29.0.3"
+ 
+     defaultConfig {
++        def unsplash_key = "UNSPLASH_ACCESS_KEY"
+         applicationId "com.codinginflow.imagesearchapp"
+         minSdkVersion rootProject.minSdkVersion
+         targetSdkVersion rootProject.targetSdkVersion
+@@ -18,7 +19,7 @@
+ 
+         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+ 
+-        buildConfigField("String", "UNSPLASH_ACCESS_KEY", unsplash_access_key)
++        buildConfigField("String", unsplash_key, "\"8BkPiUTWv1symAF6oVT1Pa7fLcRXHpM__khiwXx8y54\"")
+     }
+ 
+     buildTypes {
+Index: app/src/main/java/com/codinginflow/imagesearchapp/api/UnsplashApi.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.codinginflow.imagesearchapp.api\r\n\r\nimport com.codinginflow.imagesearchapp.BuildConfig\r\nimport retrofit2.http.GET\r\nimport retrofit2.http.Headers\r\nimport retrofit2.http.Query\r\n\r\ninterface UnsplashApi {\r\n\r\n    companion object {\r\n        const val BASE_URL = \"https://api.unsplash.com/\"\r\n        const val CLIENT_ID = BuildConfig.UNSPLASH_ACCESS_KEY\r\n    }\r\n\r\n    @Headers(\"Accept-Version: v1\", \"Authorization: Client-ID $CLIENT_ID\")\r\n    @GET(\"search/photos\")\r\n    suspend fun searchPhotos(\r\n        @Query(\"query\") query: String,\r\n        @Query(\"page\") page: Int,\r\n        @Query(\"per_page\") perPage: Int\r\n    ): UnsplashResponse\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/codinginflow/imagesearchapp/api/UnsplashApi.kt b/app/src/main/java/com/codinginflow/imagesearchapp/api/UnsplashApi.kt
+--- a/app/src/main/java/com/codinginflow/imagesearchapp/api/UnsplashApi.kt	(revision b98037e60fcebade49ec3e5500d69a106b679df6)
++++ b/app/src/main/java/com/codinginflow/imagesearchapp/api/UnsplashApi.kt	(date 1640220016232)
+@@ -1,5 +1,7 @@
+ package com.codinginflow.imagesearchapp.api
+ 
++
++
+ import com.codinginflow.imagesearchapp.BuildConfig
+ import retrofit2.http.GET
+ import retrofit2.http.Headers
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+new file mode 100644
+--- /dev/null	(date 1640218722389)
++++ b/.idea/compiler.xml	(date 1640218722389)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="1.8" />
++  </component>
++</project>
+\ No newline at end of file

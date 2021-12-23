@@ -1,0 +1,110 @@
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\r\napply plugin: 'kotlin-android'\r\napply plugin: 'kotlin-android-extensions'\r\napply plugin: 'kotlin-kapt'\r\napply plugin: \"androidx.navigation.safeargs.kotlin\"\r\napply plugin: 'dagger.hilt.android.plugin'\r\n\r\nandroid {\r\n    compileSdkVersion rootProject.compileSdkVersion\r\n    buildToolsVersion \"29.0.3\"\r\n\r\n    defaultConfig {\r\n        applicationId \"com.codinginflow.imagesearchapp\"\r\n        minSdkVersion rootProject.minSdkVersion\r\n        targetSdkVersion rootProject.targetSdkVersion\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n\r\n        buildConfigField(\"String\", \"UNSPLASH_ACCESS_KEY\", unsplash_access_key)\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n\r\n    buildFeatures {\r\n        viewBinding true\r\n    }\r\n\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n\r\n    kotlinOptions {\r\n        jvmTarget = JavaVersion.VERSION_1_8\r\n    }\r\n}\r\n\r\ndependencies {\r\n    // Default dependencies\r\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\r\n    implementation \"org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion\"\r\n    implementation \"androidx.core:core-ktx:$ktxVersion\"\r\n    implementation \"androidx.appcompat:appcompat:$appCompatVersion\"\r\n    implementation \"androidx.constraintlayout:constraintlayout:$constraintLayoutVersion\"\r\n    testImplementation \"junit:junit:$junitVersion\"\r\n    androidTestImplementation \"androidx.test.ext:junit:$testExtJunitVersion\"\r\n    androidTestImplementation \"androidx.test.espresso:espresso-core:$espressoVersion\"\r\n\r\n    // Navigation Component\r\n    implementation \"androidx.navigation:navigation-fragment-ktx:$navigationVersion\"\r\n    implementation \"androidx.navigation:navigation-ui-ktx:$navigationVersion\"\r\n\r\n    // Dagger Hilt\r\n    implementation \"com.google.dagger:hilt-android:$hiltVersion\"\r\n    kapt \"com.google.dagger:hilt-android-compiler:$hiltVersion\"\r\n    implementation \"androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidXVersion\"\r\n    kapt \"androidx.hilt:hilt-compiler:$hiltAndroidXVersion\"\r\n\r\n    // Retrofit + GSON\r\n    implementation \"com.squareup.retrofit2:retrofit:$retrofitVersion\"\r\n    implementation \"com.squareup.retrofit2:converter-gson:$retrofitVersion\"\r\n\r\n    // Glide\r\n    implementation \"com.github.bumptech.glide:glide:$glideVersion\"\r\n\r\n    // Paging 3\r\n    implementation \"androidx.paging:paging-runtime:$pagingVersion\"\r\n}\r\n\r\nkapt {\r\n    correctErrorTypes true\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	(revision 485363e59fec316de684da336291ab0aa02901a7)
++++ b/app/build.gradle	(date 1640218172208)
+@@ -18,7 +18,7 @@
+ 
+         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+ 
+-        buildConfigField("String", "UNSPLASH_ACCESS_KEY", unsplash_access_key)
++        buildConfigField("String", "UNSPLASH_ACCESS_KEY", "8BkPiUTWv1symAF6oVT1Pa7fLcRXHpM__khiwXx8y54")
+     }
+ 
+     buildTypes {
+Index: README.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># MVVM Image Search App with Architecture Components & Retrofit\r\n\r\nWatch the course here: https://www.youtube.com/playlist?list=PLrnPJCHvNZuC_pEfFlZuTmjlY4T3DTtED\r\n\r\n![thumbnail part 1](https://user-images.githubusercontent.com/52977034/116893176-f6906d00-ac30-11eb-9aa2-24583e6ca4e9.png)\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/README.md b/README.md
+--- a/README.md	(revision 485363e59fec316de684da336291ab0aa02901a7)
++++ b/README.md	(date 1640217725189)
+@@ -1,5 +1,3 @@
+ # MVVM Image Search App with Architecture Components & Retrofit
+ 
+-Watch the course here: https://www.youtube.com/playlist?list=PLrnPJCHvNZuC_pEfFlZuTmjlY4T3DTtED
+-
+ ![thumbnail part 1](https://user-images.githubusercontent.com/52977034/116893176-f6906d00-ac30-11eb-9aa2-24583e6ca4e9.png)
+Index: .idea/runConfigurations.xml
+===================================================================
+diff --git a/.idea/runConfigurations.xml b/.idea/runConfigurations.xml
+deleted file mode 100644
+--- a/.idea/runConfigurations.xml	(revision 485363e59fec316de684da336291ab0aa02901a7)
++++ /dev/null	(revision 485363e59fec316de684da336291ab0aa02901a7)
+@@ -1,12 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RunConfigurationProducerService">
+-    <option name="ignoredProducers">
+-      <set>
+-        <option value="org.jetbrains.plugins.gradle.execution.test.runner.AllInPackageGradleConfigurationProducer" />
+-        <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestClassGradleConfigurationProducer" />
+-        <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestMethodGradleConfigurationProducer" />
+-      </set>
+-    </option>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CMakeSettings\">\r\n    <configurations>\r\n      <configuration PROFILE_NAME=\"Debug\" CONFIG_NAME=\"Debug\" />\r\n    </configurations>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 485363e59fec316de684da336291ab0aa02901a7)
++++ b/.idea/misc.xml	(date 1640218463985)
+@@ -5,7 +5,7 @@
+       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+     </configurations>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"gradleJvm\" value=\"1.8\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision 485363e59fec316de684da336291ab0aa02901a7)
++++ b/.idea/gradle.xml	(date 1640217728469)
+@@ -4,7 +4,7 @@
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+-        <option name="testRunner" value="PLATFORM" />
++        <option name="testRunner" value="GRADLE" />
+         <option name="distributionType" value="DEFAULT_WRAPPED" />
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+         <option name="gradleJvm" value="1.8" />
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+new file mode 100644
+--- /dev/null	(date 1640218299451)
++++ b/.idea/compiler.xml	(date 1640218299451)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="1.8" />
++  </component>
++</project>
+\ No newline at end of file
